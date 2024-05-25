@@ -4,5 +4,5 @@
   "semi": false,
   "quoteProps": "consistent",
   "tabWidth": 2,
-  "useTabs": true
+  "useTabs": false
 }
