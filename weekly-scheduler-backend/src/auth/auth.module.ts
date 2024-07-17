@@ -12,13 +12,13 @@ import { JwtStrategy } from "./jwt.stratejy"
 
 @Module({
   imports: [
-    UserModule,
     ConfigModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: getJwtConfig,
     }),
+    UserModule,
   ],
   controllers: [AuthController],
   providers: [JwtStrategy, AuthService],
