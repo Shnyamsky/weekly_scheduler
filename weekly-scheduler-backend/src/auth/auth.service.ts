@@ -22,6 +22,16 @@ export class AuthService {
     private userService: UserService
   ) {}
 
+  private async validateUser(dto: AuthDto) {
+    const user = await this.userService.getByEmail(dto.email)
+    if (!user) throw new NotFoundException("User not found")
+
+    const isValid = await verify(user.password, dto.password)
+    if (!isValid) throw new UnauthorizedException("Invalid password")
+
+    return user
+  }
+
   private issueToken(userId: string) {
     const data = { id: userId }
 
@@ -34,16 +44,6 @@ export class AuthService {
     })
 
     return { accessToken, refreshToken }
-  }
-
-  private async validateUser(dto: AuthDto) {
-    const user = await this.userService.getByEmail(dto.email)
-    if (!user) throw new NotFoundException("User not found")
-
-    const isValid = await verify(user.password, dto.password)
-    if (!isValid) throw new UnauthorizedException("Invalid password")
-
-    return user
   }
 
   addRefreshTokenToResponse(res: Response, refreshToken: string) {

@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   postgres:
     container_name: weekly_scheduler
@@ -6,7 +5,7 @@ services:
     ports:
       - "5454:5432"
     volumes:
-      - /data/postgres:/data/postgres
+      - /Users/shnyam/Code/data:/var/lib/postgresql/data
     env_file:
       - docker.env
     networks:
